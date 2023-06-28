@@ -10,16 +10,18 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
+
+add_subdirectory(editor)
 
 set(PROJECT_SOURCES
         main.cpp
-        splashwindow.cpp
-        splashwindow.h
-        splashwindow.ui
+        mainwindow.cpp
+        mainwindow.h
+        mainwindow.ui
 )
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+if(6 GREATER_EQUAL 6)
     qt_add_executable(mide
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
@@ -42,7 +44,12 @@ else()
     endif()
 endif()
 
-target_link_libraries(mide PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(mide PRIVATE
+    Qt6::Core
+    Qt6::Widgets
+    Qt6::Gui
+    QCodeEditor
+)
 
 set_target_properties(mide PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
