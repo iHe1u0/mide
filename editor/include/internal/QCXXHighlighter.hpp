@@ -1,8 +1,10 @@
 #pragma once
 
 // QCodeEditor
-#include <QStyleSyntaxHighlighter> // Required for inheritance
 #include <QHighlightRule>
+
+// Required for inheritance
+#include <QStyleSyntaxHighlighter>
 
 // Qt
 #include <QRegularExpression>
@@ -14,29 +16,25 @@ class QSyntaxStyle;
  * @brief Class, that describes C++ code
  * highlighter.
  */
-class QCXXHighlighter : public QStyleSyntaxHighlighter
-{
-    Q_OBJECT
-public:
+class QCXXHighlighter : public QStyleSyntaxHighlighter {
+  Q_OBJECT
+ public:
+  /**
+   * @brief Constructor.
+   * @param document Pointer to document.
+   */
+  explicit QCXXHighlighter(QTextDocument *document = nullptr);
 
-    /**
-     * @brief Constructor.
-     * @param document Pointer to document.
-     */
-    explicit QCXXHighlighter(QTextDocument* document=nullptr);
+ protected:
+  void highlightBlock(const QString &text) override;
 
-protected:
-    void highlightBlock(const QString& text) override;
+ private:
+  QVector<QHighlightRule> m_highlightRules;
 
-private:
+  QRegularExpression m_includePattern;
+  QRegularExpression m_functionPattern;
+  QRegularExpression m_defTypePattern;
 
-    QVector<QHighlightRule> m_highlightRules;
-
-    QRegularExpression m_includePattern;
-    QRegularExpression m_functionPattern;
-    QRegularExpression m_defTypePattern;
-
-    QRegularExpression m_commentStartPattern;
-    QRegularExpression m_commentEndPattern;
+  QRegularExpression m_commentStartPattern;
+  QRegularExpression m_commentEndPattern;
 };
-

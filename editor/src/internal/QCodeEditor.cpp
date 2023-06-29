@@ -23,10 +23,15 @@ static QVector<QPair<QString, QString>> parentheses = {
     {"(", ")"}, {"{", "}"}, {"[", "]"}, {"\"", "\""}, {"'", "'"}};
 
 QCodeEditor::QCodeEditor(QWidget *widget)
-    : QTextEdit(widget), m_highlighter(nullptr), m_syntaxStyle(nullptr),
-      m_lineNumberArea(new QLineNumberArea(this)), m_completer(nullptr),
+    : QTextEdit(widget),
+      m_highlighter(nullptr),
+      m_syntaxStyle(nullptr),
+      m_lineNumberArea(new QLineNumberArea(this)),
+      m_completer(nullptr),
       m_framedAttribute(new QFramedTextAttribute(this)),
-      m_autoIndentation(true), m_autoParentheses(true), m_replaceTab(true),
+      m_autoIndentation(true),
+      m_autoParentheses(true),
+      m_replaceTab(true),
       m_tabReplace(QString(4, ' ')) {
   initDocumentLayoutHandlers();
   initFont();
@@ -169,7 +174,6 @@ void QCodeEditor::updateLineNumberArea(const QRect &rect) {
 }
 
 void QCodeEditor::handleSelectionQuery(QTextCursor cursor) {
-
   auto searchIterator = cursor;
   searchIterator.movePosition(QTextCursor::Start);
   searchIterator = document()->find(cursor.selectedText(), searchIterator);
@@ -317,15 +321,15 @@ int QCodeEditor::getFirstVisibleBlock() {
 bool QCodeEditor::proceedCompleterBegin(QKeyEvent *e) {
   if (m_completer && m_completer->popup()->isVisible()) {
     switch (e->key()) {
-    case Qt::Key_Enter:
-    case Qt::Key_Return:
-    case Qt::Key_Escape:
-    case Qt::Key_Tab:
-    case Qt::Key_Backtab:
-      e->ignore();
-      return true; // let the completer do default behavior
-    default:
-      break;
+      case Qt::Key_Enter:
+      case Qt::Key_Return:
+      case Qt::Key_Escape:
+      case Qt::Key_Tab:
+      case Qt::Key_Backtab:
+        e->ignore();
+        return true;  // let the completer do default behavior
+      default:
+        break;
     }
   }
 
@@ -422,8 +426,7 @@ void QCodeEditor::keyPressEvent(QKeyEvent *e) {
         charsBack += tabCounts;
       }
 
-      while (charsBack--)
-        moveCursor(QTextCursor::MoveOperation::Left);
+      while (charsBack--) moveCursor(QTextCursor::MoveOperation::Left);
       return;
     }
 

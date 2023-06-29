@@ -1,10 +1,10 @@
 #pragma once
 
 // Qt
-#include <QMainWindow> // Required for inheritance
+#include <QMainWindow>  // Required for inheritance
+#include <QPair>
 #include <QString>
 #include <QVector>
-#include <QPair>
 
 class QVBoxLayout;
 class QSyntaxStyle;
@@ -18,51 +18,47 @@ class QCodeEditor;
 /**
  * @brief Class, that describes demo main window.
  */
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
+class MainWindow : public QMainWindow {
+  Q_OBJECT
 
-public:
+ public:
+  /**
+   * @brief Constructor.
+   * @param parent Pointer to parent widget.
+   */
+  explicit MainWindow(QWidget* parent = nullptr);
 
-    /**
-     * @brief Constructor.
-     * @param parent Pointer to parent widget.
-     */
-    explicit MainWindow(QWidget* parent=nullptr);
+ private:
+  void loadStyle(QString path);
 
-private:
+  QString loadCode(QString path);
 
-    void loadStyle(QString path);
+  void initData();
 
-    QString loadCode(QString path);
+  void createWidgets();
 
-    void initData();
+  void setupWidgets();
 
-    void createWidgets();
+  void performConnections();
 
-    void setupWidgets();
+  QVBoxLayout* m_setupLayout;
 
-    void performConnections();
+  QComboBox* m_codeSampleCombobox;
+  QComboBox* m_highlighterCombobox;
+  QComboBox* m_completerCombobox;
+  QComboBox* m_styleCombobox;
 
-    QVBoxLayout* m_setupLayout;
+  QCheckBox* m_readOnlyCheckBox;
+  QCheckBox* m_wordWrapCheckBox;
+  QCheckBox* m_parenthesesEnabledCheckbox;
+  QCheckBox* m_tabReplaceEnabledCheckbox;
+  QSpinBox* m_tabReplaceNumberSpinbox;
+  QCheckBox* m_autoIndentationCheckbox;
 
-    QComboBox* m_codeSampleCombobox;
-    QComboBox* m_highlighterCombobox;
-    QComboBox* m_completerCombobox;
-    QComboBox* m_styleCombobox;
+  QCodeEditor* m_codeEditor;
 
-    QCheckBox* m_readOnlyCheckBox;
-    QCheckBox* m_wordWrapCheckBox;
-    QCheckBox* m_parenthesesEnabledCheckbox;
-    QCheckBox* m_tabReplaceEnabledCheckbox;
-    QSpinBox*  m_tabReplaceNumberSpinbox;
-    QCheckBox* m_autoIndentationCheckbox;
-
-    QCodeEditor* m_codeEditor;
-
-    QVector<QPair<QString, QString>> m_codeSamples;
-    QVector<QPair<QString, QCompleter*>> m_completers;
-    QVector<QPair<QString, QStyleSyntaxHighlighter*>> m_highlighters;
-    QVector<QPair<QString, QSyntaxStyle*>> m_styles;
+  QVector<QPair<QString, QString>> m_codeSamples;
+  QVector<QPair<QString, QCompleter*>> m_completers;
+  QVector<QPair<QString, QStyleSyntaxHighlighter*>> m_highlighters;
+  QVector<QPair<QString, QSyntaxStyle*>> m_styles;
 };
-

@@ -1,8 +1,8 @@
 #pragma once
 
 // Qt
-#include <QObject>              // Required for inheritance
-#include <QTextObjectInterface> // Required for inheritance
+#include <QObject>               // Required for inheritance
+#include <QTextObjectInterface>  // Required for inheritance
 
 class QSyntaxStyle;
 
@@ -14,7 +14,7 @@ class QFramedTextAttribute : public QObject, public QTextObjectInterface {
   Q_OBJECT
   Q_INTERFACES(QTextObjectInterface)
 
-public:
+ public:
   enum Property { FramedString = 1 };
 
   /**
@@ -71,6 +71,6 @@ public:
    */
   QSyntaxStyle *syntaxStyle() const;
 
-private:
+ private:
   QSyntaxStyle *m_style;
 };
